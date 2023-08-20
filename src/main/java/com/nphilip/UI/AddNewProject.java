@@ -1,5 +1,7 @@
 package com.nphilip.UI;
 
+import com.nphilip.manager.ItemListManager;
+import com.nphilip.models.ProjectItem;
 import com.nphilip.utils.Utils;
 
 import javax.swing.*;
@@ -7,11 +9,17 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 
 public class AddNewProject {
+
+    private static final ItemListManager<ProjectItem> itemListManager = new ItemListManager<>();
+    static ArrayList<ProjectItem> items = itemListManager.getItems();
+    static JList<ProjectItem> itemJList = new JList<>(itemListManager.getListModel());
+
     public static void addNewProject() {
         JFrame mainFrame = new JFrame("Project Manager");
-        mainFrame.setSize(500, 200);
+        mainFrame.setSize(990, 400);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLocationRelativeTo(null);
 
@@ -47,7 +55,11 @@ public class AddNewProject {
         int frameWidth = mainFrame.getWidth();
         int x = frameWidth / 2;
 
-        createProject.setBounds(x - 80, 100, 150, 35);
+        createProject.setBounds(x - 80, 220, 150, 35);
+
+        JScrollPane listScrollPane = new JScrollPane(itemJList);
+        listScrollPane.setBounds(475, 0, 460, 200);
+        itemListManager.addItem(new ProjectItem("Title", "Subtitle"));
 
         selectProjectLocation.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
@@ -60,9 +72,7 @@ public class AddNewProject {
             }
         });
 
-        createProject.addActionListener(e -> {
-            createProject(projectPathInput.getText() + "\\" + projectNameInput.getText(), mainFrame);
-        });
+        createProject.addActionListener(e -> createProject(projectPathInput.getText() + "\\" + projectNameInput.getText(), mainFrame));
 
         projectNameInput.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -101,6 +111,7 @@ public class AddNewProject {
         mainPanel.add(finalProjectPathInfoLabel);
         mainPanel.add(selectProjectLocation);
         mainPanel.add(createProject);
+        mainPanel.add(listScrollPane);
 
         mainFrame.add(mainPanel);
         mainFrame.setVisible(true);

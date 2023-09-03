@@ -9,7 +9,11 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 public class AddNewProject {
@@ -18,7 +22,9 @@ public class AddNewProject {
     static JList<ProjectItem> itemJList = new JList<>(itemListManager.getListModel());
 
     public static void addNewProject() {
-        itemListManager.addAllItems(new JSONDataManager().loadDataFromJsonFile());
+        if (new JSONDataManager().loadDataFromJsonFile() != null) {
+            itemListManager.addAllItems(new JSONDataManager().loadDataFromJsonFile());
+        }
 
         JFrame mainFrame = new JFrame("Project Manager");
         mainFrame.setSize(990, 400);
@@ -52,6 +58,14 @@ public class AddNewProject {
         JButton selectProjectLocation = new JButton("Select Path");
         selectProjectLocation.setBounds(300, 40, 100, 25);
 
+        JLabel deleteHintLabel = new JLabel("Select item and press \"entf\" to delete it");
+        deleteHintLabel.setBounds(475, 198, 250, 20); // Adjust the bounds as needed
+
+        deleteHintLabel.setForeground(Color.GRAY);
+
+        Font hintFont = new Font("Arial", Font.PLAIN, 12); // Adjust the size as needed
+        deleteHintLabel.setFont(hintFont);
+
         JButton createProject = new JButton("Create Project");
 
         int frameWidth = mainFrame.getWidth();
@@ -61,6 +75,33 @@ public class AddNewProject {
 
         JScrollPane listScrollPane = new JScrollPane(itemJList);
         listScrollPane.setBounds(475, 0, 460, 200);
+
+        itemJList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    ProjectItem selectedProject = itemJList.getSelectedValue();
+                    if (selectedProject != null) {
+                        System.out.println("Selected Project: " + selectedProject.getTitle());
+                    }
+                }
+            }
+        });
+
+        itemJList.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    // Delete the selected item
+                    ProjectItem selectedProject = itemJList.getSelectedValue();
+                    if (selectedProject != null) {
+                        itemListManager.removeItem(selectedProject);
+                        itemJList.updateUI();
+
+                    }
+                }
+            }
+        });
 
         itemJList.setCellRenderer(new DefaultListCellRenderer() {
             @Override
@@ -149,6 +190,7 @@ public class AddNewProject {
         mainPanel.add(selectProjectLocation);
         mainPanel.add(createProject);
         mainPanel.add(listScrollPane);
+        mainPanel.add(deleteHintLabel);
 
         mainFrame.add(mainPanel);
         mainFrame.setVisible(true);

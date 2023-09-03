@@ -7,6 +7,7 @@ import com.nphilip.models.ProjectItem;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class JSONDataManager {
 
@@ -25,7 +26,12 @@ public class JSONDataManager {
     }
 
     public void appendItemToJsonFile(ProjectItem projectItem) {
-        ArrayList<ProjectItem> existingProjectItems = loadDataFromJsonFile();
+        ArrayList<ProjectItem> existingProjectItems;
+        if (loadDataFromJsonFile() != null) {
+            existingProjectItems = loadDataFromJsonFile();
+        } else {
+            existingProjectItems = new ArrayList<>();
+        }
         existingProjectItems.add(projectItem);
         try (FileWriter writer = new FileWriter(JSON_FILE_PATH)) {
             writer.write(gson.toJson(existingProjectItems));
@@ -48,6 +54,20 @@ public class JSONDataManager {
     }
 
     public void deleteItemFromJSONFile(ProjectItem item) {
+        ArrayList<ProjectItem> projectItems = loadDataFromJsonFile();
 
+        ArrayList<ProjectItem> updatedItems = new ArrayList<>();
+
+        for (ProjectItem projectItem : projectItems) {
+            if (!Objects.equals(projectItem.getSubtitle(), item.getSubtitle())) {
+                updatedItems.add(projectItem);
+            }
+        }
+
+        try (FileWriter writer = new FileWriter(JSON_FILE_PATH)) {
+            writer.write(gson.toJson(updatedItems));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

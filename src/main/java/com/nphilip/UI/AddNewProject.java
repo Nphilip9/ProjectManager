@@ -9,12 +9,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 
 public class AddNewProject {
 
     private static final ItemListManager<ProjectItem> itemListManager = new ItemListManager<>();
-    static ArrayList<ProjectItem> items = itemListManager.getItems();
     static JList<ProjectItem> itemJList = new JList<>(itemListManager.getListModel());
 
     public static void addNewProject() {
@@ -61,6 +59,25 @@ public class AddNewProject {
         listScrollPane.setBounds(475, 0, 460, 200);
         itemListManager.addItem(new ProjectItem("Title", "Subtitle"));
 
+        itemJList.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof ProjectItem item) {
+                    String title = item.getTitle();
+                    String subtitle = item.getSubtitle();
+
+                    // Use a different font with a smaller size for the subtitle
+                    Font subtitleFont = new Font("Arial", Font.PLAIN, 12); // Adjust the size as needed
+                    setFont(subtitleFont);
+
+                    // Display the title and subtitle
+                    setText("<html><b>" + title + "</b><br><font color='gray'>" + subtitle + "</font></html>");
+                }
+                return this;
+            }
+        });
+
         selectProjectLocation.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -72,7 +89,7 @@ public class AddNewProject {
             }
         });
 
-        createProject.addActionListener(e -> createProject(projectPathInput.getText() + "\\" + projectNameInput.getText(), mainFrame));
+        createProject.addActionListener(e -> createProject(projectNameInput.getText(), projectPathInput.getText(), mainFrame));
 
         projectNameInput.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -117,11 +134,13 @@ public class AddNewProject {
         mainFrame.setVisible(true);
     }
 
-    private static void createProject(String path, JFrame mainFrame) {
-        System.out.println(path);
+    private static void createProject(String name, String location, JFrame mainFrame) {
+        String path = location + "\\" + name;
         boolean file = new File(path).mkdir();
         if(file) {
             JOptionPane.showMessageDialog(mainFrame, "Project created!");
+            itemListManager.addItem(new ProjectItem(name, path));
+            itemJList.updateUI();
         } else {
             JOptionPane.showMessageDialog(mainFrame, "Project not created!");
         }

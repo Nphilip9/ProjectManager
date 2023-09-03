@@ -1,4 +1,6 @@
 package com.nphilip.manager;
+import com.nphilip.models.ProjectItem;
+
 import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class ItemListManager<T> {
 
     public void addItem(T item) {
         listModel.addElement(item);
+        new JSONDataManager().appendItemToJsonFile((ProjectItem) item);
     }
 
     public void removeItem(T item) {

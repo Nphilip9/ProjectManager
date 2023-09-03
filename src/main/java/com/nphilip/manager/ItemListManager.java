@@ -17,8 +17,13 @@ public class ItemListManager<T> {
         new JSONDataManager().appendItemToJsonFile((ProjectItem) item);
     }
 
+    public void addAllItems(ArrayList<T> items) {
+        listModel.addAll(items);
+    }
+
     public void removeItem(T item) {
         listModel.removeElement(item);
+        new JSONDataManager().deleteItemFromJSONFile((ProjectItem) item);
     }
 
     public T getItemAt(int index) {

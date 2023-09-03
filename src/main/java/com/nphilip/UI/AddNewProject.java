@@ -1,10 +1,12 @@
 package com.nphilip.UI;
 
 import com.nphilip.manager.ItemListManager;
+import com.nphilip.manager.JSONDataManager;
 import com.nphilip.models.ProjectItem;
 import com.nphilip.utils.Utils;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
@@ -16,6 +18,8 @@ public class AddNewProject {
     static JList<ProjectItem> itemJList = new JList<>(itemListManager.getListModel());
 
     public static void addNewProject() {
+        itemListManager.addAllItems(new JSONDataManager().loadDataFromJsonFile());
+
         JFrame mainFrame = new JFrame("Project Manager");
         mainFrame.setSize(990, 400);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,24 +61,40 @@ public class AddNewProject {
 
         JScrollPane listScrollPane = new JScrollPane(itemJList);
         listScrollPane.setBounds(475, 0, 460, 200);
-        itemListManager.addItem(new ProjectItem("Title", "Subtitle"));
 
         itemJList.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                JPanel itemPanel = new JPanel(new BorderLayout());
+
+                Border separatorBorder = BorderFactory.createMatteBorder(0, 0, 5, 0, Color.WHITE); // Smaller and gray
+                itemPanel.setBorder(separatorBorder);
+
+                JLabel titleLabel = new JLabel();
+                titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                titleLabel.setForeground(Color.BLACK);
+
                 if (value instanceof ProjectItem item) {
                     String title = item.getTitle();
                     String subtitle = item.getSubtitle();
+                    titleLabel.setText(title);
 
-                    // Use a different font with a smaller size for the subtitle
-                    Font subtitleFont = new Font("Arial", Font.PLAIN, 12); // Adjust the size as needed
-                    setFont(subtitleFont);
+                    Font subtitleFont = new Font("Arial", Font.PLAIN, 12);
+                    JLabel subtitleLabel = new JLabel(subtitle);
+                    subtitleLabel.setFont(subtitleFont);
+                    subtitleLabel.setForeground(Color.GRAY);
 
-                    // Display the title and subtitle
-                    setText("<html><b>" + title + "</b><br><font color='gray'>" + subtitle + "</font></html>");
+                    itemPanel.add(titleLabel, BorderLayout.NORTH);
+                    itemPanel.add(subtitleLabel, BorderLayout.SOUTH);
                 }
-                return this;
+
+                if (isSelected) {
+                    itemPanel.setBackground(Color.LIGHT_GRAY);
+                } else {
+                    itemPanel.setBackground(Color.WHITE);
+                }
+
+                return itemPanel;
             }
         });
 

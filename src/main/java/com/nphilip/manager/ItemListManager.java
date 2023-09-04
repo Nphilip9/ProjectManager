@@ -3,7 +3,6 @@ import com.nphilip.models.ProjectItem;
 
 import javax.swing.DefaultListModel;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemListManager<T> {
     private final DefaultListModel<T> listModel;

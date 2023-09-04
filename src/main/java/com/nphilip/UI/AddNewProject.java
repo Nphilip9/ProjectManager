@@ -3,14 +3,13 @@ package com.nphilip.UI;
 import com.nphilip.manager.ItemListManager;
 import com.nphilip.manager.JSONDataManager;
 import com.nphilip.models.ProjectItem;
+import com.nphilip.server.Server;
 import com.nphilip.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -76,14 +75,11 @@ public class AddNewProject {
         JScrollPane listScrollPane = new JScrollPane(itemJList);
         listScrollPane.setBounds(475, 0, 460, 200);
 
-        itemJList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    ProjectItem selectedProject = itemJList.getSelectedValue();
-                    if (selectedProject != null) {
-                        System.out.println("Selected Project: " + selectedProject.getTitle());
-                    }
+        itemJList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                ProjectItem selectedProject = itemJList.getSelectedValue();
+                if (selectedProject != null) {
+                    System.out.println("Selected Project: " + selectedProject.getTitle());
                 }
             }
         });

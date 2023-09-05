@@ -4,9 +4,12 @@ public class ProjectItem {
     private final String title;
     private final String subtitle;
 
-    public ProjectItem(String title, String subtitle) {
+    private final String creationDate;
+
+    public ProjectItem(String title, String subtitle, String creationDate) {
         this.title = title;
         this.subtitle = subtitle;
+        this.creationDate = creationDate;
     }
 
     public String getTitle() {
@@ -17,8 +20,12 @@ public class ProjectItem {
         return subtitle;
     }
 
+    public String getCreationDate() {
+        return creationDate;
+    }
+
     @Override
     public String toString() {
-        return title; // Display the title in the JList
+        return title + " " + subtitle + " " + creationDate;
     }
 }

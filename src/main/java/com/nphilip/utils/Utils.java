@@ -1,5 +1,11 @@
 package com.nphilip.utils;
 
+import com.nphilip.models.ProjectItem;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Utils {
     public static String shortenPath(String path, int maxLength) {
         int ellipsisLength = 3;
@@ -17,5 +23,16 @@ public class Utils {
 
             return firstPart + "..." + lastPart;
         }
+    }
+
+    public static String getCurrentDate() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        return now.format(formatter);
+    }
+
+    public static void deleteItemPath(ProjectItem projectItem) {
+        File file = new File(projectItem.getSubtitle());
+        file.delete();
     }
 }

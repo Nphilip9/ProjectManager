@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="98b0850a-d32f-4a6f-b7f7-5dfb8aa6fa46" name="Changes" comment="Init commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/UI/AddNewProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/UI/AddNewProject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/manager/ItemListManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/manager/ItemListManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/manager/JSONDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/manager/JSONDataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/models/ProjectItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/models/ProjectItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/utils/Utils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

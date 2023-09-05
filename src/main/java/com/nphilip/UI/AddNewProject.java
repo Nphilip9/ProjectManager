@@ -34,19 +34,19 @@ public class AddNewProject {
         mainPanel.setLayout(null);
 
         JLabel projectNameInfoLabel = new JLabel("Project Name: ");
-        projectNameInfoLabel.setBounds(10, 0, 100, 25);
+        projectNameInfoLabel.setBounds(10, 10, 100, 25);
 
         JTextField projectNameInput = new JTextField("unnamed", 17);
-        projectNameInput.setBounds(115, 0, 180, 25);
+        projectNameInput.setBounds(115, 10, 180, 25);
 
         JLabel projectPathInfoLabel = new JLabel("Project Location: ");
-        projectPathInfoLabel.setBounds(10, 40, 100, 25);
+        projectPathInfoLabel.setBounds(10, 50, 100, 25);
 
         JTextField projectPathInput = new JTextField(System.getProperty("user.home"));
-        projectPathInput.setBounds(115, 40, 180, 25);
+        projectPathInput.setBounds(115, 50, 180, 25);
 
         JLabel finalProjectPathInfoLabel = new JLabel("Project will be created in: " + System.getProperty("user.home") + "\\" + projectNameInput.getText());
-        finalProjectPathInfoLabel.setBounds(115, 65, 1000, 20);
+        finalProjectPathInfoLabel.setBounds(115, 75, 1000, 20);
 
         Font font = new Font("Arial", Font.PLAIN, 12);
         finalProjectPathInfoLabel.setFont(font);
@@ -55,40 +55,33 @@ public class AddNewProject {
         finalProjectPathInfoLabel.setForeground(greyColor);
 
         JButton selectProjectLocation = new JButton("Select Path");
-        selectProjectLocation.setBounds(300, 40, 100, 25);
+        selectProjectLocation.setBounds(300, 50, 100, 25);
 
         JLabel deleteHintLabel = new JLabel("Select item and press \"entf\" to delete it");
-        deleteHintLabel.setBounds(475, 198, 250, 20); // Adjust the bounds as needed
+        deleteHintLabel.setBounds(475, 208, 250, 20); // Adjust the bounds as needed
 
         deleteHintLabel.setForeground(Color.GRAY);
 
         Font hintFont = new Font("Arial", Font.PLAIN, 12); // Adjust the size as needed
         deleteHintLabel.setFont(hintFont);
 
+        JCheckBox addGitRepoCheckBox = new JCheckBox("Add Git Repo");
+        addGitRepoCheckBox.setBounds(7, 90, 150, 20);
+
         JButton createProject = new JButton("Create Project");
 
         int frameWidth = mainFrame.getWidth();
         int x = frameWidth / 2;
 
-        createProject.setBounds(x - 80, 220, 150, 35);
+        createProject.setBounds(x - 80, 230, 150, 35);
 
         JScrollPane listScrollPane = new JScrollPane(itemJList);
-        listScrollPane.setBounds(475, 0, 460, 200);
-
-        itemJList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                ProjectItem selectedProject = itemJList.getSelectedValue();
-                if (selectedProject != null) {
-                    System.out.println("Selected Project: " + selectedProject.getTitle());
-                }
-            }
-        });
+        listScrollPane.setBounds(475, 10, 460, 200);
 
         itemJList.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-                    // Delete the selected item
                     ProjectItem selectedProject = itemJList.getSelectedValue();
                     if (selectedProject != null) {
                         itemListManager.removeItem(selectedProject);
@@ -184,6 +177,7 @@ public class AddNewProject {
         mainPanel.add(projectPathInput);
         mainPanel.add(finalProjectPathInfoLabel);
         mainPanel.add(selectProjectLocation);
+        mainPanel.add(addGitRepoCheckBox);
         mainPanel.add(createProject);
         mainPanel.add(listScrollPane);
         mainPanel.add(deleteHintLabel);
@@ -196,8 +190,8 @@ public class AddNewProject {
         String path = location + "\\" + name;
         boolean file = new File(path).mkdir();
         if(file) {
+            itemListManager.addItem(new ProjectItem(name, path, Utils.getCurrentDate()));
             JOptionPane.showMessageDialog(mainFrame, "Project created!");
-            itemListManager.addItem(new ProjectItem(name, path));
             itemJList.updateUI();
         } else {
             JOptionPane.showMessageDialog(mainFrame, "Project not created!");

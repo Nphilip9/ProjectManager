@@ -1,15 +1,14 @@
 package com.nphilip.manager;
 import com.nphilip.models.ProjectItem;
+import com.nphilip.utils.Utils;
 
 import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 
 public class ItemListManager<T> {
-    private final DefaultListModel<T> listModel;
+    private DefaultListModel<T> listModel = new DefaultListModel<>();
 
-    public ItemListManager() {
-        listModel = new DefaultListModel<>();
-    }
+    public ItemListManager() { }
 
     public void addItem(T item) {
         listModel.addElement(item);
@@ -23,6 +22,7 @@ public class ItemListManager<T> {
     public void removeItem(T item) {
         listModel.removeElement(item);
         new JSONDataManager().deleteItemFromJSONFile((ProjectItem) item);
+        Utils.deleteItemPath((ProjectItem) item);
     }
 
     public T getItemAt(int index) {

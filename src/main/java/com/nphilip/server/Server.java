@@ -56,7 +56,7 @@ public class Server {
                 while ((clientMessage = in.readLine()) != null) {
                     System.out.println("Received message from client: " + clientMessage);
                     if (new JSONDataManager().loadDataFromJsonFile().toString() != null) {
-                        broadcastMessage(new JSONDataManager().loadDataFromJsonFile().toString());
+                        broadcastMessage(new JSONDataManager().loadJSONStringFromJSONFile());
                     } else
                         broadcastMessage("[]");
                 }

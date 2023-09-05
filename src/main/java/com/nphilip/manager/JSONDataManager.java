@@ -55,7 +55,6 @@ public class JSONDataManager {
 
     public void deleteItemFromJSONFile(ProjectItem item) {
         ArrayList<ProjectItem> projectItems = loadDataFromJsonFile();
-
         ArrayList<ProjectItem> updatedItems = new ArrayList<>();
 
         for (ProjectItem projectItem : projectItems) {
@@ -69,5 +68,26 @@ public class JSONDataManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String loadJSONStringFromJSONFile() {
+        StringBuilder fileContent = new StringBuilder();
+        try {
+            FileInputStream fileInputStream = new FileInputStream(JSON_FILE_PATH);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                fileContent.append(line);
+            }
+
+            bufferedReader.close();
+            inputStreamReader.close();
+            fileInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileContent.toString();
     }
 }

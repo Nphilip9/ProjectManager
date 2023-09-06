@@ -6,13 +6,16 @@ import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 
 public class ItemListManager<T> {
-    private DefaultListModel<T> listModel = new DefaultListModel<>();
+    private final DefaultListModel<T> listModel = new DefaultListModel<>();
 
     public ItemListManager() { }
 
-    public void addItem(T item) {
+    public void addItem(T item, boolean addGitRepo) {
         listModel.addElement(item);
         new JSONDataManager().appendItemToJsonFile((ProjectItem) item);
+        if (addGitRepo) {
+            new GitInitializationManager().initializeLocalGitRepository(((ProjectItem) item).getSubtitle());
+        }
     }
 
     public void addAllItems(ArrayList<T> items) {

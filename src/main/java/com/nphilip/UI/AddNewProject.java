@@ -20,6 +20,8 @@ public class AddNewProject {
     private static final ItemListManager<ProjectItem> itemListManager = new ItemListManager<>();
     static JList<ProjectItem> itemJList = new JList<>(itemListManager.getListModel());
 
+    private static boolean checkBoxIsSelected = false;
+
     public static void addNewProject() {
         if (new JSONDataManager().loadDataFromJsonFile() != null) {
             itemListManager.addAllItems(new JSONDataManager().loadDataFromJsonFile());
@@ -86,10 +88,13 @@ public class AddNewProject {
                     if (selectedProject != null) {
                         itemListManager.removeItem(selectedProject);
                         itemJList.updateUI();
-
                     }
                 }
             }
+        });
+
+        addGitRepoCheckBox.addActionListener(e -> {
+            checkBoxIsSelected = addGitRepoCheckBox.isSelected();
         });
 
         itemJList.setCellRenderer(new DefaultListCellRenderer() {
@@ -190,7 +195,7 @@ public class AddNewProject {
         String path = location + "\\" + name;
         boolean file = new File(path).mkdir();
         if(file) {
-            itemListManager.addItem(new ProjectItem(name, path, Utils.getCurrentDate()));
+            itemListManager.addItem(new ProjectItem(name, path, Utils.getCurrentDate()), checkBoxIsSelected);
             JOptionPane.showMessageDialog(mainFrame, "Project created!");
             itemJList.updateUI();
         } else {

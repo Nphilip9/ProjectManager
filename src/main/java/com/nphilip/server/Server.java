@@ -1,6 +1,7 @@
 package com.nphilip.server;
 
 import com.nphilip.manager.JSONDataManager;
+import com.nphilip.manager.RequestAndResponseManager;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -37,10 +38,16 @@ public class Server {
         }
     }
 
+    public ArrayList<ClientHandler> getClients() {
+        return (ArrayList<ClientHandler>) clients;
+    }
+
     private static class ClientHandler implements Runnable {
         private final Socket socket;
         private PrintWriter out;
         private BufferedReader in;
+
+        RequestAndResponseManager requestAndResponseManager = new RequestAndResponseManager();
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
@@ -54,11 +61,7 @@ public class Server {
 
                 String clientMessage;
                 while ((clientMessage = in.readLine()) != null) {
-                    System.out.println("Received message from client: " + clientMessage);
-                    if (new JSONDataManager().loadDataFromJsonFile().toString() != null) {
-                        broadcastMessage(new JSONDataManager().loadJSONStringFromJSONFile());
-                    } else
-                        broadcastMessage("[]");
+                    requestAndResponseManager.handleResponse(clientMessage);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

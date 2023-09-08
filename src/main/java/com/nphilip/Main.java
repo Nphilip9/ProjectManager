@@ -3,8 +3,6 @@ package com.nphilip;
 import com.nphilip.UI.AddNewProject;
 import com.nphilip.server.Server;
 
-import javax.swing.*;
-
 public class Main {
     public static void main(String[] args) {
         UIThread uiThread = new UIThread();

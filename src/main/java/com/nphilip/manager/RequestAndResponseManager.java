@@ -1,17 +1,44 @@
 package com.nphilip.manager;
 
+import com.google.gson.Gson;
+import com.nphilip.models.ProjectItem;
+import com.nphilip.models.RequestType;
 import com.nphilip.server.Server;
 
 import java.io.*;
 
 public class RequestAndResponseManager {
-    public void sendNewItemToClient(String jsonData) {
-        jsonData = "New Item" + jsonData;
-        Server.broadcastMessage(jsonData);
+
+    public void handleRequest(RequestType requestType) {
+        String request = requestType.toString();
+        if (new Server().isClientConnected()) {
+            Server.broadcastMessage(request);
+        } else {
+            handleRequestOnClientOffline(request);
+        }
+
+        System.out.println(request);
     }
 
-    public void handleResponse(String response) {
-        sendNewItemToClient(new JSONDataManager().loadJSONStringFromJSONFile());
+    public void handleRequest(RequestType requestType, ProjectItem item) {
+        String request = requestType.toString() + new Gson().toJson(item);
+        if (new Server().isClientConnected()) {
+            Server.broadcastMessage(request);
+        } else {
+            handleRequestOnClientOffline(request);
+        }
+
+        System.out.println(request);
+    }
+
+    public void handleRequest(String request) {
+        if (new Server().isClientConnected()) {
+            Server.broadcastMessage(request);
+        } else {
+            handleRequestOnClientOffline(request);
+        }
+
+        System.out.println(request);
     }
 
     private void handleRequestOnClientOffline(String request) {
@@ -40,7 +67,11 @@ public class RequestAndResponseManager {
 
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
-                    // Send requests all one by one
+                    if (line.contains(RequestType.GET_JSON_DATA.toString())) {
+                        handleRequest(RequestType.GET_JSON_DATA);
+                    } else {
+                        handleRequest(line);
+                    }
                 }
 
                 bufferedReader.close();

@@ -2,7 +2,9 @@ package com.nphilip.UI;
 
 import com.nphilip.manager.ItemListManager;
 import com.nphilip.manager.JSONDataManager;
+import com.nphilip.manager.RequestAndResponseManager;
 import com.nphilip.models.ProjectItem;
+import com.nphilip.models.RequestType;
 import com.nphilip.server.Server;
 import com.nphilip.utils.Utils;
 
@@ -89,6 +91,7 @@ public class AddNewProject {
                     if (selectedProject != null) {
                         itemListManager.removeItem(selectedProject);
                         itemJList.updateUI();
+                        new RequestAndResponseManager().handleRequest(RequestType.ITEM_DELETION, selectedProject);
                     }
                 }
             }
@@ -199,6 +202,7 @@ public class AddNewProject {
             itemListManager.addItem(new ProjectItem(name, path, Utils.getCurrentDate()), checkBoxIsSelected);
             JOptionPane.showMessageDialog(mainFrame, "Project created!");
             itemJList.updateUI();
+            new RequestAndResponseManager().handleRequest(RequestType.NEW_ITEM_CREATION, new ProjectItem(name, path, Utils.getCurrentDate()));
         } else {
             JOptionPane.showMessageDialog(mainFrame, "Project not created!");
         }

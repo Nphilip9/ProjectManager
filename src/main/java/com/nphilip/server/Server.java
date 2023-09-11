@@ -20,6 +20,7 @@ public class Server {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Client connected: " + clientSocket.getInetAddress());
+                new RequestAndResponseManager().checkForMessageQueue();
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clients.add(clientHandler);
@@ -38,8 +39,8 @@ public class Server {
         }
     }
 
-    public ArrayList<ClientHandler> getClients() {
-        return (ArrayList<ClientHandler>) clients;
+    public boolean isClientConnected() {
+        return clients.size() > 0;
     }
 
     private static class ClientHandler implements Runnable {
@@ -61,7 +62,7 @@ public class Server {
 
                 String clientMessage;
                 while ((clientMessage = in.readLine()) != null) {
-                    requestAndResponseManager.handleResponse(clientMessage);
+                    // Handle
                 }
             } catch (IOException e) {
                 e.printStackTrace();

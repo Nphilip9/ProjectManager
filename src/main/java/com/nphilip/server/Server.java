@@ -48,8 +48,6 @@ public class Server {
         private PrintWriter out;
         private BufferedReader in;
 
-        RequestAndResponseManager requestAndResponseManager = new RequestAndResponseManager();
-
         public ClientHandler(Socket socket) {
             this.socket = socket;
         }
@@ -62,7 +60,7 @@ public class Server {
 
                 String clientMessage;
                 while ((clientMessage = in.readLine()) != null) {
-                    // Handle
+                    new RequestAndResponseManager().handleRequests(clientMessage);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

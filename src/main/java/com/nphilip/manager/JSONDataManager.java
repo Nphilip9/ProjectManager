@@ -27,8 +27,8 @@ public class JSONDataManager {
 
     public void appendItemToJsonFile(ProjectItem projectItem) {
         ArrayList<ProjectItem> existingProjectItems;
-        if (loadDataFromJsonFile() != null) {
-            existingProjectItems = loadDataFromJsonFile();
+        if (loadItemsFromJsonFile() != null) {
+            existingProjectItems = loadItemsFromJsonFile();
         } else {
             existingProjectItems = new ArrayList<>();
         }
@@ -40,7 +40,7 @@ public class JSONDataManager {
         }
     }
 
-    public ArrayList<ProjectItem> loadDataFromJsonFile() {
+    public ArrayList<ProjectItem> loadItemsFromJsonFile() {
         ArrayList<ProjectItem> projectItems = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader(JSON_FILE_PATH);
@@ -54,7 +54,7 @@ public class JSONDataManager {
     }
 
     public void deleteItemFromJSONFile(ProjectItem item) {
-        ArrayList<ProjectItem> projectItems = loadDataFromJsonFile();
+        ArrayList<ProjectItem> projectItems = loadItemsFromJsonFile();
         ArrayList<ProjectItem> updatedItems = new ArrayList<>();
 
         for (ProjectItem projectItem : projectItems) {

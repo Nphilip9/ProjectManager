@@ -9,36 +9,42 @@ import java.io.*;
 
 public class RequestAndResponseManager {
 
-    public void handleRequest(RequestType requestType) {
+    Server server = new Server();
+
+    public void handleRequests(String request) {
+        if (request.startsWith(RequestType.GET_JSON_DATA.toString())) {
+
+        } else if (request.startsWith(RequestType.NEW_ITEM_CREATION.toString())) {
+
+        } else if (request.startsWith(RequestType.ITEM_DELETION.toString())) {
+
+        }
+    }
+
+    public void createRequest(RequestType requestType) {
         String request = requestType.toString();
-        if (new Server().isClientConnected()) {
+        if (server.isClientConnected()) {
             Server.broadcastMessage(request);
         } else {
             handleRequestOnClientOffline(request);
         }
-
-        System.out.println(request);
     }
 
-    public void handleRequest(RequestType requestType, ProjectItem item) {
+    public void createRequest(RequestType requestType, ProjectItem item) {
         String request = requestType.toString() + new Gson().toJson(item);
-        if (new Server().isClientConnected()) {
+        if (server.isClientConnected()) {
             Server.broadcastMessage(request);
         } else {
             handleRequestOnClientOffline(request);
         }
-
-        System.out.println(request);
     }
 
-    public void handleRequest(String request) {
-        if (new Server().isClientConnected()) {
+    public void createRequest(String request) {
+        if (server.isClientConnected()) {
             Server.broadcastMessage(request);
         } else {
             handleRequestOnClientOffline(request);
         }
-
-        System.out.println(request);
     }
 
     private void handleRequestOnClientOffline(String request) {
@@ -68,9 +74,9 @@ public class RequestAndResponseManager {
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     if (line.contains(RequestType.GET_JSON_DATA.toString())) {
-                        handleRequest(RequestType.GET_JSON_DATA);
+                        createRequest(RequestType.GET_JSON_DATA);
                     } else {
-                        handleRequest(line);
+                        createRequest(line);
                     }
                 }
 

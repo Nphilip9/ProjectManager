@@ -13,7 +13,7 @@ public class RequestAndResponseManager {
 
     public void handleRequests(String request) {
         if (request.startsWith(RequestType.GET_JSON_DATA.toString())) {
-
+            Server.broadcastMessage("GET_JSON_DATA" + new JSONDataManager().loadJSONStringFromJSONFile());
         } else if (request.startsWith(RequestType.NEW_ITEM_CREATION.toString())) {
 
         } else if (request.startsWith(RequestType.ITEM_DELETION.toString())) {

@@ -5,6 +5,7 @@ import com.nphilip.manager.JSONDataManager;
 import com.nphilip.manager.RequestAndResponseManager;
 import com.nphilip.models.ProjectItem;
 import com.nphilip.models.RequestType;
+import com.nphilip.server.Server;
 import com.nphilip.utils.Utils;
 
 import javax.swing.*;
@@ -97,6 +98,7 @@ public class AddNewProject {
 
         addGitRepoCheckBox.addActionListener(e -> {
             checkBoxIsSelected = addGitRepoCheckBox.isSelected();
+            Server.broadcastMessage("GET_JSON_DATA" + new JSONDataManager().loadJSONStringFromJSONFile());
         });
 
         itemJList.setCellRenderer(new DefaultListCellRenderer() {

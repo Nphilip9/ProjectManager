@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98b0850a-d32f-4a6f-b7f7-5dfb8aa6fa46" name="Changes" comment="Init commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/UI/AddNewProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/UI/AddNewProject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/manager/JSONDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/manager/JSONDataManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/manager/RequestAndResponseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/manager/RequestAndResponseManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nphilip/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nphilip/server/Server.java" afterDir="false" />
     </list>
@@ -39,6 +39,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\phili\Desktop\ProjectManager\src\main\resources" />

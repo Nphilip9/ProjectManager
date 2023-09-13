@@ -20,7 +20,7 @@ public class Server {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Client connected: " + clientSocket.getInetAddress());
-                new RequestAndResponseManager().checkForMessageQueue();
+                //new RequestAndResponseManager().checkForMessageQueue();
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clients.add(clientHandler);
@@ -60,6 +60,7 @@ public class Server {
 
                 String clientMessage;
                 while ((clientMessage = in.readLine()) != null) {
+                    System.out.println(clientMessage);
                     new RequestAndResponseManager().handleRequests(clientMessage);
                 }
             } catch (IOException e) {
@@ -72,7 +73,9 @@ public class Server {
         }
 
         public void sendMessage(String message) {
+            System.out.println(message);
             if (out != null) {
+                System.out.println("Sended");
                 out.println(message);
             }
         }

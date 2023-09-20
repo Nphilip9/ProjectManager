@@ -7,6 +7,7 @@ import com.nphilip.models.ProjectItem;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class JSONDataManager {
@@ -38,6 +39,15 @@ public class JSONDataManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ProjectItem toProjectItem(String gsonString) {
+        return new Gson().fromJson(gsonString, ProjectItem.class);
+    }
+
+    public ArrayList<ProjectItem> toProjectItems(String gsonString) {
+        Type listType = new TypeToken<List<ProjectItem>>() {}.getType();
+        return new Gson().fromJson(gsonString, listType);
     }
 
     public ArrayList<ProjectItem> loadItemsFromJsonFile() {

@@ -1,15 +1,14 @@
 package com.nphilip.models;
 
 public class ProjectItem {
-    private final String title;
-    private final String subtitle;
+    private final String title, subtitle, shortDescription, creationDate, deadline;
 
-    private final String creationDate;
-
-    public ProjectItem(String title, String subtitle, String creationDate) {
+    public ProjectItem(String title, String subtitle, String shortDescription, String creationDate, String deadline) {
         this.title = title;
         this.subtitle = subtitle;
+        this.shortDescription = shortDescription;
         this.creationDate = creationDate;
+        this.deadline = deadline;
     }
 
     public String getTitle() {
@@ -20,8 +19,16 @@ public class ProjectItem {
         return subtitle;
     }
 
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
     public String getCreationDate() {
         return creationDate;
+    }
+
+    public String getDeadline() {
+        return deadline;
     }
 
     @Override

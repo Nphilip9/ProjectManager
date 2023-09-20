@@ -12,12 +12,16 @@ public class RequestAndResponseManager {
     Server server = new Server();
 
     public void handleRequests(String request) {
+        JSONDataManager jsonDataManager = new JSONDataManager();
+
         if (request.startsWith(RequestType.GET_JSON_DATA.toString())) {
             Server.broadcastMessage("GET_JSON_DATA" + new JSONDataManager().loadJSONStringFromJSONFile());
         } else if (request.startsWith(RequestType.NEW_ITEM_CREATION.toString())) {
-
+            request = request.replace(RequestType.NEW_ITEM_CREATION.toString(), "");
+            jsonDataManager.appendItemToJsonFile(jsonDataManager.toProjectItem(request));
         } else if (request.startsWith(RequestType.ITEM_DELETION.toString())) {
-
+            request = request.replace(RequestType.ITEM_DELETION.toString(), "");
+            jsonDataManager.deleteItemFromJSONFile(jsonDataManager.toProjectItem(request));
         }
     }
 

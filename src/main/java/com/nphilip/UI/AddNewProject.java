@@ -41,16 +41,22 @@ public class AddNewProject {
         projectNameInfoLabel.setBounds(10, 10, 100, 25);
 
         JTextField projectNameInput = new JTextField("unnamed", 17);
-        projectNameInput.setBounds(115, 10, 180, 25);
+        projectNameInput.setBounds(135, 10, 180, 25);
+
+        JLabel projectDescriptionLabel = new JLabel("Project Description:");
+        projectDescriptionLabel.setBounds(10, 45, 120, 25);
+
+        JTextArea projectDescriptionInput = new JTextArea(5, 10);
+        projectDescriptionInput.setBounds(135, 45, 180, 75);
 
         JLabel projectPathInfoLabel = new JLabel("Project Location: ");
-        projectPathInfoLabel.setBounds(10, 50, 100, 25);
+        projectPathInfoLabel.setBounds(10, 125, 100, 25);
 
         JTextField projectPathInput = new JTextField(System.getProperty("user.home"));
-        projectPathInput.setBounds(115, 50, 180, 25);
+        projectPathInput.setBounds(135, 125, 180, 25);
 
         JLabel finalProjectPathInfoLabel = new JLabel("Project will be created in: " + System.getProperty("user.home") + "\\" + projectNameInput.getText());
-        finalProjectPathInfoLabel.setBounds(115, 75, 1000, 20);
+        finalProjectPathInfoLabel.setBounds(135, 150, 1000, 20);
 
         Font font = new Font("Arial", Font.PLAIN, 12);
         finalProjectPathInfoLabel.setFont(font);
@@ -59,7 +65,7 @@ public class AddNewProject {
         finalProjectPathInfoLabel.setForeground(greyColor);
 
         JButton selectProjectLocation = new JButton("Select Path");
-        selectProjectLocation.setBounds(300, 50, 100, 25);
+        selectProjectLocation.setBounds(320, 125, 100, 25);
 
         JLabel deleteHintLabel = new JLabel("Select item and press \"entf\" to delete it");
         deleteHintLabel.setBounds(475, 208, 250, 20); // Adjust the bounds as needed
@@ -70,14 +76,14 @@ public class AddNewProject {
         deleteHintLabel.setFont(hintFont);
 
         JCheckBox addGitRepoCheckBox = new JCheckBox("Add Git Repo");
-        addGitRepoCheckBox.setBounds(7, 90, 150, 20);
+        addGitRepoCheckBox.setBounds(7, 190, 150, 20);
 
         JButton createProject = new JButton("Create Project");
 
         int frameWidth = mainFrame.getWidth();
         int x = frameWidth / 2;
 
-        createProject.setBounds(x - 80, 230, 150, 35);
+        createProject.setBounds(x - 80, 290, 150, 35);
 
         JScrollPane listScrollPane = new JScrollPane(itemJList);
         listScrollPane.setBounds(475, 10, 460, 200);
@@ -182,6 +188,8 @@ public class AddNewProject {
 
         mainPanel.add(projectNameInfoLabel);
         mainPanel.add(projectNameInput);
+        mainPanel.add(projectDescriptionLabel);
+        mainPanel.add(projectDescriptionInput);
         mainPanel.add(projectPathInfoLabel);
         mainPanel.add(projectPathInput);
         mainPanel.add(finalProjectPathInfoLabel);
@@ -199,10 +207,10 @@ public class AddNewProject {
         String path = location + "\\" + name;
         boolean file = new File(path).mkdir();
         if(file) {
-            itemListManager.addItem(new ProjectItem(name, path, Utils.getCurrentDate()), checkBoxIsSelected);
+            //itemListManager.addItem(new ProjectItem(name, path, Utils.getCurrentDate()), checkBoxIsSelected);
             JOptionPane.showMessageDialog(mainFrame, "Project created!");
             itemJList.updateUI();
-            new RequestAndResponseManager().createRequest(RequestType.NEW_ITEM_CREATION, new ProjectItem(name, path, Utils.getCurrentDate()));
+            //new RequestAndResponseManager().createRequest(RequestType.NEW_ITEM_CREATION, new ProjectItem(name, path, Utils.getCurrentDate()));
         } else {
             JOptionPane.showMessageDialog(mainFrame, "Project not created!");
         }
